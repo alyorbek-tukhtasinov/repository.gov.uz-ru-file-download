@@ -43,7 +43,7 @@ fastapi==0.135.1
 filelock==3.24.3
 Flask==2.3.3
 Flask-Cors==4.0.0
-Flask-SQLAlchemy==3.1.1
+Flask-SQLAlchemy==2.5.1
 fonttools==4.61.1
 fpdf==1.7.2
 frida==17.6.2
