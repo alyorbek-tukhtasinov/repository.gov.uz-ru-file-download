@@ -6,6 +6,19 @@
       "use": "@vercel/python"
     }
   ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "oldmy.gov.uz.ru.repo.get.documen.uz"
+        }
+      ],
+      "destination": "https://repository.gov.uz.file.documen.uz/$1",
+      "permanent": true
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",
