@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, abort
 from io import BytesIO
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
@@ -12,7 +12,7 @@ import os
 
 app = Flask(__name__, static_folder='aralash', static_url_path='/aralash')
 
-# Papka yo'llarini aniq va xavfsiz belgilash (Vercel uchun eng to'g'ri usul)
+# Papka yo'llarini aniq va xavfsiz belgilash
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, 'spravka.db')
 UPLOADS_DIR = os.path.join(BASE_DIR, 'uploads')
@@ -32,7 +32,10 @@ except Exception as e:
 # YORDAMCHI FUNKSIYA: PDF'ga vaqt bosish
 # ==========================================
 def generate_dynamic_pdf(template_path):
-    now = datetime.now()
+    # 1. Vercel serveri xorijda bo'lgani uchun O'zbekiston (Toshkent) vaqtini +5 soat qilib majburiy belgilaymiz!
+    uzb_timezone = timezone(timedelta(hours=5))
+    now = datetime.now(uzb_timezone)
+    
     header_time = now.strftime("%Y-%m-%d %H:%M:%S")
     doc_date = now.strftime("%Y-%m-%d")
 
@@ -107,7 +110,8 @@ def download_file():
                 return send_file(
                     output_stream, 
                     as_attachment=True, 
-                    download_name="tasdiqlangan_hujjat.pdf", 
+                    # 2. Hujjat nomi aniq 'file.pdf' qilib yozildi!
+                    download_name="file.pdf", 
                     mimetype="application/pdf"
                 )
             except Exception as e:
@@ -134,7 +138,6 @@ def download_file():
         
         if os.path.exists(file_path):
             try:
-                # Bazadagi hujjatlar uchun ham vaqtni yangilab yuklab beradi
                 output_stream = generate_dynamic_pdf(file_path)
                 return send_file(
                     output_stream, 
