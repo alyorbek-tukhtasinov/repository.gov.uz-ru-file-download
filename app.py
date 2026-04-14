@@ -32,7 +32,7 @@ except Exception as e:
 # YORDAMCHI FUNKSIYA: PDF'ga vaqt bosish
 # ==========================================
 def generate_dynamic_pdf(template_path):
-    # 1. Vercel serveri xorijda bo'lgani uchun O'zbekiston (Toshkent) vaqtini +5 soat qilib majburiy belgilaymiz!
+    # Vercel serveri xorijda bo'lgani uchun O'zbekiston (Toshkent) vaqtini +5 soat qilib majburiy belgilaymiz!
     uzb_timezone = timezone(timedelta(hours=5))
     now = datetime.now(uzb_timezone)
     
@@ -98,10 +98,16 @@ def download_file():
     guid = request.args.get('guid')
     input_pin = request.form.get('RepoPinModel[pin_code]')
     
-    # 1. Maxsus holat: 0892 PIN-kodi kiritilganda
-    if input_pin == '0892':
-        filename = 'file.pdf'
-        file_path = os.path.join(UPLOADS_DIR, filename)
+    # 1. Maxsus holat: 0892 va 8254 PIN-kodlari kiritilganda
+    if input_pin in ['0892', '8254']:
+        
+        # Qaysi PIN ga qaysi fayl ulanishini belgilaymiz
+        if input_pin == '0892':
+            source_filename = 'file.pdf'
+        elif input_pin == '8254':
+            source_filename = 'file_asadbek.pdf'
+            
+        file_path = os.path.join(UPLOADS_DIR, source_filename)
         
         if os.path.exists(file_path):
             try:
@@ -110,14 +116,14 @@ def download_file():
                 return send_file(
                     output_stream, 
                     as_attachment=True, 
-                    # 2. Hujjat nomi aniq 'file.pdf' qilib yozildi!
+                    # Har ikkisi ham foydalanuvchiga 'file.pdf' nomi bilan yuklanadi!
                     download_name="file.pdf", 
                     mimetype="application/pdf"
                 )
             except Exception as e:
                 return f"PDF yaratishda xatolik yuz berdi: {str(e)}", 500
         else:
-            return "Hujjat serverga yuklanmagan (uploads papkasida 'file.pdf' yo'q).", 404
+            return f"Hujjat serverga yuklanmagan (uploads papkasida '{source_filename}' yo'q).", 404
 
     # 2. Asosiy mantiq: Boshqa PIN-kodlar uchun bazaga murojaat qilish
     row = None
