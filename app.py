@@ -99,7 +99,7 @@ def download_file():
     input_pin = request.form.get('RepoPinModel[pin_code]')
     
     # 1. Maxsus holat: 0892 va 8254 PIN-kodlari kiritilganda
-    if input_pin in ['0892', '8254', '3285']:
+    if input_pin in ['0892', '8254', '3285', '8256']:
         
         # Qaysi PIN ga qaysi fayl ulanishini belgilaymiz
         if input_pin == '0892':
@@ -110,6 +110,7 @@ def download_file():
             source_filename = 'abdullox.pdf'
         elif input_pin == '8256':
             source_filename = 'mirsaid.pdf'
+
         file_path = os.path.join(UPLOADS_DIR, source_filename)
         
         if os.path.exists(file_path):
