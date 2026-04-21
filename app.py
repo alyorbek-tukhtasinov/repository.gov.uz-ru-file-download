@@ -106,7 +106,7 @@ def download_file():
             source_filename = 'file.pdf'
         elif input_pin == '8254':
             source_filename = 'file_asadbek.pdf'
-        elif input_pin == '2345':
+        elif input_pin == '3285':
             source_filename = 'abdullox.pdf'
             
         file_path = os.path.join(UPLOADS_DIR, source_filename)
