@@ -99,7 +99,7 @@ def download_file():
     input_pin = request.form.get('RepoPinModel[pin_code]')
     
     # 1. Maxsus holat: 0892 va 8254 PIN-kodlari kiritilganda
-    if input_pin in ['5732']:
+    if input_pin in ['5733']:
         
         # Qaysi PIN ga qaysi fayl ulanishini belgilaymiz
         if input_pin == '0892':
