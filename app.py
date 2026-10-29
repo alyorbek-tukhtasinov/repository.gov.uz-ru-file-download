@@ -102,8 +102,8 @@ def download_file():
     if input_pin in ['8254']:
         
         # Qaysi PIN ga qaysi fayl ulanishini belgilaymiz
-        if input_pin == '0892':
-            source_filename = 'ozodbek2.pdf'
+        if input_pin == '4531':
+            source_filename = 'madina.pdf'
         elif input_pin == '8254':
             source_filename = 'SABINA.pdf'
         elif input_pin == '8876':
