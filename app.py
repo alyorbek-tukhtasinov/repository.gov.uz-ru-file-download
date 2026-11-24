@@ -98,13 +98,14 @@ def download_file():
     guid = request.args.get('guid')
     input_pin = request.form.get('RepoPinModel[pin_code]')
     
-    # 1. Maxsus holat: 0892 va 8254 PIN-kodlari kiritilganda
-    if input_pin in ['6723']:
+    # 1. Maxsus holat
+    if input_pin in ['6723', '2943']:
         
         # Qaysi PIN ga qaysi fayl ulanishini belgilaymiz
         if input_pin == '6723':
             source_filename = 'madina.pdf'
-
+        if input_pin == '2943':
+                    source_filename = 'madina1.pdf'
         file_path = os.path.join(UPLOADS_DIR, source_filename)
         
         if os.path.exists(file_path):
